@@ -1,0 +1,45 @@
+\subsection{Further Research}
+\label{further_research}
+
+Sub-sections \ref{overall_results} and \ref{fams} present the models' average
+    performance.
+We did not research what is the best model in a given pixel on a given day.
+To answer this, a study finding an optimal number of outer validation days is
+    neccessary.
+With the varying effect of the training horizon, this model selection is a
+    two-dimensional grid search that is prone to overfitting due to the high
+    noise in low count data.
+Except heuristics relating the ADD to the training horizon, we cannot say
+    anything about that based on our study.
+\cite{lemke2010} and \cite{wang2009} show how, for example, a time series'
+    characteristics may be used to select models.
+Thus, we suggest conducting more detailed analyses on how to incorporate model
+    selection into our proposed forecasting system.
+
+Future research should also integrate our forecasting system into a predictive
+    routing application and evaluate its business impact.
+This embeds our research into the vast literature on the VRP.
+Initially introduced by \cite{dantzig1959}, \gls{vrp}s are concerned with
+    finding optimal routes serving customers.
+We refer to \cite{toth2014} for a comprehensive overview.
+The two variants relevant for the UDP case are the dynamic VRP and
+    the pickup and delivery problem (\gls{pdp}).
+A VRP is dynamic if the data to solve a problem only becomes available
+    as the operations are underway.
+\cite{thomas2010}, \cite{pillac2013}, and \cite{psaraftis2016} describe how
+    technological advances, in particular, mobile technologies, have led to a
+    renewed interest in research on dynamic VRPs, and
+    \cite{berbeglia2010} provide a general overview.
+\cite{ichoua2006} and \cite{ferrucci2013} provide solution methods for
+    simulation studies where they assume stochastic customer demand based on
+    historical distributions.
+In both studies, dummy demand nodes are inserted into the VRP instance.
+Forecasts by our system extend this idea naturally as dummy nodes could be
+    derived from point forecasts as well.
+The concrete case of a meal delivering UDP is contained in a recent
+    literature stream started by \cite{ulmer2017} and extended by
+    \cite{reyes2018} and \cite{yildiz2018}: They coin the term meal delivery
+    routing problem (\gls{mdrp}).
+The MDRP is a special case of the dynamic PDP where the defining
+    characteristic is that once a vehicle is scheduled, a modification of the
+    route is inadmissible.

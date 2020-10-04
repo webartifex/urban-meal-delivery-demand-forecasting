@@ -1,19 +1,6 @@
 \subsection{Results by Model Families}
 \label{fams}
 
-Besides the overall results, we provide an in-depth comparison of models
-    within a family.
-Instead of reporting the MASE per model, we rank the models holding the
-    training horizon fixed to make comparison easier.
-Table \ref{t:hori} presents the models trained on horizontal time series.
-In addition to \textit{naive}, we include \textit{fnaive} and \textit{pnaive}
-    already here as more competitive benchmarks.
-The tables in this section report two rankings simultaneously:
-The first number is the rank resulting from lumping the low and medium
-    clusters together, which yields almost the same rankings when analyzed
-    individually.
-The ranks from only high demand pixels are in parentheses if they differ.
-
 \begin{center}
 \captionof{table}{Ranking of benchmark and horizontal models
                   ($1~\text{km}^2$ pixel size, 60-minute time steps):
@@ -46,6 +33,19 @@ The ranks from only high demand pixels are in parentheses if they differ.
 \end{tabular}
 \end{center}
 \
+
+Besides the overall results, we provide an in-depth comparison of models
+    within a family.
+Instead of reporting the MASE per model, we rank the models holding the
+    training horizon fixed to make comparison easier.
+Table \ref{t:hori} presents the models trained on horizontal time series.
+In addition to \textit{naive}, we include \textit{fnaive} and \textit{pnaive}
+    already here as more competitive benchmarks.
+The tables in this section report two rankings simultaneously:
+The first number is the rank resulting from lumping the low and medium
+    clusters together, which yields almost the same rankings when analyzed
+    individually.
+The ranks from only high demand pixels are in parentheses if they differ.
 
 A first insight is that \textit{fnaive} is the best benchmark in all
     scenarios:
