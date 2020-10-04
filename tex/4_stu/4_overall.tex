@@ -44,13 +44,6 @@ As the non-seasonal \textit{hses} reaches a similar accuracy as its
 So, in the absence of seasonality, models that only model a trend part are
     the least susceptible to the noise.
 
-For medium demand (i.e., $10 < \text{ADD} < 25$) and training horizons up to
-    six weeks, the best-performing models are the same as for low demand.
-For longer horizons, \textit{hets} provides the highest accuracy.
-Thus, to fit a seasonal pattern, longer training horizons are needed.
-While \textit{vsvr} enters the top three, \textit{hets} has the edge as they
-    neither require parameter tuning nor real-time data.
-
 \begin{center}
 \captionof{table}{Top-3 models by training weeks and average demand
                   ($1~\text{km}^2$ pixel size, 60-minute time steps)}
@@ -205,6 +198,13 @@ While \textit{vsvr} enters the top three, \textit{hets} has the edge as they
 \hline
 \end{tabular}
 \end{center}
+
+For medium demand (i.e., $10 < \text{ADD} < 25$) and training horizons up to
+    six weeks, the best-performing models are the same as for low demand.
+For longer horizons, \textit{hets} provides the highest accuracy.
+Thus, to fit a seasonal pattern, longer training horizons are needed.
+While \textit{vsvr} enters the top three, \textit{hets} has the edge as they
+    neither require parameter tuning nor real-time data.
 
 In summary, except for high demand, simple models trained on horizontal time
     series work best.
