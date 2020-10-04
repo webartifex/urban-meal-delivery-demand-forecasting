@@ -1,0 +1,23 @@
+\subsection{Generalizability of the Methology and Findings}
+\label{generalizability}
+
+Whereas forecasting applications are always data-specific, the following
+    aspects generalize to UDPs with ad-hoc transportation services:
+\begin{itemize}
+\item \textbf{Double Seasonality}:
+The double seasonality causes a periodicity $k$ too large to be modeled by
+    classical models, and we adapt the STL method in the \textit{fnaive} model
+    such that it "flexibly" fits a seasonal pattern changing in a non-trivial
+    way over time.
+\item \textbf{Order Sparsity}:
+The intermittent time series resulting from gridification require simple
+    methods like \textit{hsma} or \textit{trivial} that are not as susceptible
+    to noise as more sophisticated ones.
+\item \textbf{Unified CV}:
+A CV unified around a whole day allows evaluating classical statistical and ML
+    methods on the same scale.
+It is agnostic of both the type of the time series and retraining.
+\item \textbf{Error Measure}:
+Analogous to \cite{hyndman2006}, we emphasize the importance of choosing a
+    consistent error measure, and argue for increased use of MASE.
+\end{itemize}
