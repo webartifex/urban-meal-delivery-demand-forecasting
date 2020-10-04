@@ -1,0 +1,60 @@
+\subsubsection{Support Vector Regression.}
+\label{svm}
+
+\cite{vapnik1963} and \cite{vapnik1964} introduce the so-called support vector
+    machine (\gls{svm}) model, and \cite{vapnik2013} summarizes the research
+    conducted since then.
+In its basic version, SVMs are linear classifiers, modeling a binary
+    decision, that fit a hyperplane into the feature space of $\mat{X}$ to
+    maximize the margin around the hyperplane seperating the two groups of
+    labels.
+SVMs were popularized in the 1990s in the context of optical character
+    recognition, as shown in \cite{scholkopf1998}.
+
+\cite{drucker1997} and \cite{stitson1999} adapt SVMs to the regression case,
+    and \cite{smola2004} provide a comprehensive introduction thereof.
+\cite{mueller1997} and \cite{mueller1999} focus on SVRs in the context of time
+    series data and find that they tend to outperform classical methods.
+\cite{chen2006a} and \cite{chen2006b} apply SVRs to predict the hourly demand
+    for water in cities, an application similar to the UDP case.
+
+In the SVR case, a linear function
+    $\hat{y}_i = f(\vec{x}_i) = \langle\vec{w},\vec{x}_i\rangle + b$
+    is fitted so that the actual labels $y_i$ have a deviation of at most
+    $\epsilon$ from their predictions $\hat{y}_i$ (cf., the constraints
+    below).
+SVRs are commonly formulated as quadratic optimization problems as follows:
+$$
+\text{minimize }
+\frac{1}{2} \norm{\vec{w}}^2 + C \sum_{i=1}^m (\xi_i + \xi_i^*)
+\quad \text{subject to }
+\begin{cases}
+y_i - \langle \vec{w}, \vec{x}_i \rangle - b \leq \epsilon + \xi_i
+\text{,} \\
+\langle \vec{w}, \vec{x}_i \rangle + b - y_i \leq \epsilon + \xi_i^*
+\end{cases}
+$$
+$\vec{w}$ are the fitted weights in the row space of $\mat{X}$, $b$ is a bias
+    term in the column space of $\mat{X}$, and $\langle\cdot,\cdot\rangle$
+    denotes the dot product.
+By minimizing the norm of $\vec{w}$, the fitted function is flat and not prone
+    to overfitting strongly.
+To allow individual samples outside the otherwise hard $\epsilon$ bounds,
+    non-negative slack variables $\xi_i$ and $\xi_i^*$ are included.
+A non-negative parameter $C$ regulates how many samples may violate the
+    $\epsilon$ bounds and by how much.
+To model non-linear relationships, one could use a mapping $\Phi(\cdot)$ for
+    the $\vec{x}_i$ from the row space of $\mat{X}$ to some higher
+    dimensional space; however, as the optimization problem only depends on
+    the dot product $\langle\cdot,\cdot\rangle$ and not the actual entries of
+    $\vec{x}_i$, it suffices to use a kernel function $k$ such that
+    $k(\vec{x}_i,\vec{x}_j) = \langle\Phi(\vec{x}_i),\Phi(\vec{x}_j)\rangle$.
+Such kernels must fulfill certain mathematical properties, and, besides
+    polynomial kernels, radial basis functions with 
+    $k(\vec{x}_i,\vec{x}_j) = exp(\gamma \norm{\vec{x}_i - \vec{x}_j}^2)$ are
+    a popular candidate where $\gamma$ is a parameter controlling for how the
+    distances between any two samples influence the final model.
+SVRs work well with sparse data in high dimensional spaces, such as
+    intermittent demand data, as they minimize the risk of misclassification
+    or predicting a significantly far off value by maximizing the error
+    margin, as also noted by \cite{bao2004}.

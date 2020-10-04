@@ -1,0 +1,69 @@
+\subsubsection{Autoregressive Integrated Moving Averages.}
+\label{arima}
+
+\cite{box1962}, \cite{box1968}, and more papers by the same authors in the
+    1960s introduce a type of model where observations correlate with their
+    neighbors and refer to them as autoregressive integrated moving average
+    (ARIMA) models for stationary time series.
+For a thorough overview, we refer to \cite{box2015} and \cite{brockwell2016}.
+
+A time series $y_t$ is stationary if its moments are independent of the
+    point in time where it is observed.
+A typical example is a white noise $\epsilon_t$ series.
+Therefore, a trend or seasonality implies non-stationarity.
+\cite{kwiatkowski1992} provide a test to check the null hypothesis of
+    stationary data.
+To obtain a stationary time series, one chooses from several techniques:
+First, to stabilize a changing variance (i.e., heteroscedasticity), one
+    applies a Box-Cox transformation (e.g., $log$) as first suggested by
+    \cite{box1964}.
+Second, to factor out a trend (or seasonal) pattern, one computes differences
+    of consecutive (or of lag $k$) observations or even differences thereof.
+Third, it is also common to pre-process $y_t$ with one of the decomposition
+    methods mentioned in Sub-section \ref{stl} below with an ARIMA model
+    then trained on an adjusted $y_t$.
+
+In the autoregressive part, observations are modeled as linear combinations of
+    its predecessors.
+Formally, an $AR(p)$ model is defined with a drift term $c$, coefficients
+    $\phi_i$ to be estimated (where $i$ is an index with $0 < i \leq p$), and
+    white noise $\epsilon_t$ like so:
+$
+AR(p): \ \
+y_t = c + \phi_1 y_{t-1} + \phi_2 y_{t-2} + \dots + \phi_p y_{t-p}
+      + \epsilon_t
+$.
+The moving average part considers observations to be regressing towards a
+    linear combination of past forecasting errors.
+Formally, a $MA(q)$ model is defined with a drift term $c$, coefficients
+    $\theta_j$ to be estimated, and white noise terms $\epsilon_t$ (where $j$
+    is an index with $0 < j \leq q$) as follows:
+$
+MA(q): \ \
+y_t = c + \epsilon_t + \theta_1 \epsilon_{t-1} + \theta_2 \epsilon_{t-2}
+      + \dots + \theta_q \epsilon_{t-q}
+$.
+Finally, an $ARIMA(p,d,q)$ model unifies both parts and adds differencing
+    where $d$ is the degree of differences and the $'$ indicates differenced
+    values:
+$
+ARIMA(p,d,q): \ \
+y'_t = c + \phi_1 y'_{t-1} + \dots + \phi_p y'_{t-p} + \theta_1 \epsilon_{t-1}
+       + \dots + \theta_q \epsilon_{t-q} + \epsilon_{t}
+$.
+
+$ARIMA(p,d,q)$ models are commonly fitted with maximum likelihood estimation.
+To find an optimal combination of the parameters $p$, $d$, and $q$, the
+    literature suggests calculating an information theoretical criterion
+    (e.g., Akaike's Information Criterion) that evaluates the fit on
+    historical data.
+\cite{hyndman2008a} provide a step-wise heuristic to choose $p$, $d$, and $q$,
+    that also decides if a Box-Cox transformation is to be applied, and if so,
+    which one.
+To obtain a one-step-ahead forecast, the above equation is reordered such
+    that $t$ is substituted with $T+1$.
+For forecasts further into the future, the actual observations are
+    subsequently replaced by their forecasts.    
+Seasonal ARIMA variants exist; however, the high frequency $k$ in the kind of
+    demand a UDP faces typically renders them impractical as too many
+    coefficients must be estimated.
