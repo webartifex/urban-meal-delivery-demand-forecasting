@@ -1,0 +1,9 @@
+*.acn
+*.aux
+*.bbl
+*.blg
+*.glo
+*.ist
+*.log
+*.spl
+*.synctex.gz
