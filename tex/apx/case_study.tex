@@ -1,0 +1,54 @@
+\section{Raw Order Data in the Case Study}
+\label{dataset}
+
+The raw data for the empirical study in Section \ref{stu} was provided by a
+    meal delivery platform operating in five cities in France in 2016.
+The platform received a total of 686,385 orders distributed as follows:
+
+\
+\begin{center}
+\begin{tabular}{llr}
+    \hline
+	\thead{City} & \thead{Launch Day} & \thead{Orders} \\
+	\hline
+    Bordeaux & July 18 & 64,012 \\
+    Lille & October 30 & 14,362 \\
+    Lyon & February 21 & 214,635 \\
+    Nantes & October 31 & 12,900 \\
+    Paris & March 7 & 380,476 \\
+\end{tabular}
+\end{center}
+\
+
+The part of the database relevant for forecasting can be thought of as one
+    table per city, where each row represents one order and consists of the
+    following groups of columns:
+\begin{enumerate}
+\item \textbf{Restaurant Data}
+    \begin{enumerate}
+    \item unique ID and name
+    \item pickup location as latitude-longitude pair
+    \end{enumerate}
+\item \textbf{Customer Data}
+    \begin{enumerate}
+    \item unique ID, name, and phone number
+    \item delivery location as latitude-longitude pair (mostly physical
+	      addresses but also public spots)
+	\end{enumerate}
+\item \textbf{Timestamps}
+    \begin{enumerate}
+    \item placement via the smartphone app
+    \item fulfillment workflow (pickup, delivery, cancellation, re-deliveries)
+    \end{enumerate}
+\item \textbf{Courier Data}
+    \begin{enumerate}
+    \item unique ID, name, and phone number
+    \item shift data (begin, breaks, end)
+    \item average speed
+    \end{enumerate}
+\item \textbf{Order Details}
+    \begin{enumerate}
+    \item meals and drinks
+    \item prices and discounts granted
+    \end{enumerate}
+\end{enumerate}

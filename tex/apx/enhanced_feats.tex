@@ -1,0 +1,121 @@
+\section{Enhancing Forecasting Models with External Data}
+\label{enhanced_feats}
+
+In this appendix, we show how the feature matrix in Sub-section
+    \ref{ml_models} can be extended with features other than historical order
+    data.
+Then, we provide an overview of what external data we tried out as predictors
+    in our empirical study.
+
+\subsection{Enhanced Feature Matrices}
+
+Feature matrices can naturally be extended by appending new feature columns
+    $x_{t,f}$ or $x_f$ on the right where the former represent predictors
+    changing throughout a day and the latter being static either within a
+    pixel or across a city.
+$f$ refers to an external predictor variable, such as one of the examples
+    listed below.
+In the SVR case, the columns should be standardized before fitting as external
+    predictors are most likely on a different scale than the historic order
+    data.
+Thus, for a matrix with seasonally-adjusted order data $a_t$ in it, an
+    enhanced matrix looks as follows:
+
+$$
+\vec{y}
+=
+\begin{pmatrix}
+    a_T \\
+    a_{T-1} \\
+    \dots \\
+    a_{H+1}
+\end{pmatrix}
+~~~~~
+\mat{X}
+=
+\begin{bmatrix}
+    a_{T-1}         & a_{T-2} & \dots & a_{T-H}     & ~~~
+        & x_{T,A}   & \dots   & x_{B} & \dots \\
+    a_{T-2}         & a_{T-3} & \dots & a_{T-(H+1)} & ~~~
+        & x_{T-1,A} & \dots   & x_{B} & \dots \\
+    \dots           & \dots   & \dots & \dots       & ~~~
+        & \dots     & \dots   & \dots & \dots \\
+    a_H             & a_{H-1} & \dots & a_1         & ~~~
+        & x_{H+1,A} & \dots   & x_{B} & \dots
+\end{bmatrix}
+$$
+\
+
+Similarly, we can also enhance the tabular matrices from
+    \ref{tabular_ml_models}.
+The same comments as for their pure equivalents in Sub-section \ref{ml_models}
+    apply, in particular, that ML models trained with an enhanced matrix can
+    process real-time data without being retrained.
+    
+\subsection{External Data in the Empirical Study}
+\label{external_data}
+
+In the empirical study, we tested four groups of external features that we
+    briefly describe here.
+
+\vskip 0.1in
+
+\textbf{Calendar Features}:
+\begin{itemize}
+    \item Time of day (as synthesized integers: e.g., 1,050 for 10:30 am,
+                       or 1,600 for 4 pm)
+    \item Day of week (as one-hot encoded booleans)
+    \item Work day or not (as booleans)
+\end{itemize}
+
+\vskip 0.1in
+
+\textbf{Features derived from the historical Order Data}:
+\begin{itemize}
+    \item Number of pre-orders for a time step (as integers)
+    \item 7-day SMA of the percentages of discounted orders (as percentages):
+          The platform is known for running marketing campaigns aimed at
+          first-time customers at irregular intervals. Consequently, the
+          order data show a wave-like pattern of coupons redeemed when looking
+          at the relative share of discounted orders per day.
+\end{itemize}
+
+\vskip 0.1in
+
+\textbf{Neighborhood Features}:
+\begin{itemize}
+    \item Ambient population (as integers) as obtained from the ORNL LandScan
+          database
+    \item Number of active platform restaurants (as integers)
+    \item Number of overall restaurants, food outlets, retailers, and other
+          businesses (as integers) as obtained from the Google Maps and Yelp
+          web services
+\end{itemize}
+
+\vskip 0.1in
+
+\textbf{Real-time Weather} (raw data obtained from IBM's
+                            Wunderground database):
+\begin{itemize}
+    \item Absolute temperature, wind speed, and humidity
+          (as decimals and percentages)
+    \item Relative temperature with respect to 3-day and 7-day historical
+          means (as decimals)
+    \item Day vs. night defined by sunset (as booleans)
+    \item Summarized description (as indicators $-1$, $0$, and $+1$)
+    \item Lags of the absolute temperature and the summaries covering the
+          previous three hours
+\end{itemize}
+
+\vskip 0.1in
+
+Unfortunately, we must report that none of the mentioned external data
+    improved the accuracy of the forecasts.
+Some led to models overfitting the data, which could not be regulated.
+Manual tests revealed that real-time weather data are the most promising
+    external source.
+Nevertheless, the data provided by IBM's Wunderground database originate from
+    weather stations close to airports, which implies that we only have the
+    same aggregate weather data for the entire city.
+If weather data is available on a more granular basis in the future, we see
+    some potential for exploitation.

@@ -1,0 +1,42 @@
+\subsubsection{Horizontal and Whole-day-ahead Forecasts.}
+\label{hori}
+
+The upper-left in Figure \ref{f:inputs} illustrates the simplest way to
+    generate forecasts for a test day before it has started:
+For each time of the day, the corresponding horizontal slice becomes the input
+    for a model.
+With whole days being the unified time interval, each model is trained $H$
+    times, providing a one-step-ahead forecast.
+While it is possible to have models of a different type be selected per time
+    step, that did not improve the accuracy in the empirical study.
+As the models in this family do not include the test day's demand data in
+    their training sets, we see them as benchmarks to answer \textbf{Q4},
+    checking if a UDP can take advantage of real-time information.
+The models in this family are as follows; we use prefixes, such as "h" here,
+    when methods are applied in other families as well:
+\begin{enumerate}
+\item \textit{\gls{naive}}:
+          Observation from the same time step one week prior
+\item \textit{\gls{trivial}}:
+          Predict $0$ for all time steps
+\item \textit{\gls{hcroston}}:
+          Intermittent demand method introduced by \cite{croston1972}
+\item \textit{\gls{hholt}},
+      \textit{\gls{hhwinters}},
+      \textit{\gls{hses}},
+      \textit{\gls{hsma}}, and
+      \textit{\gls{htheta}}:
+          Exponential smoothing without calibration
+\item \textit{\gls{hets}}:
+          ETS calibrated as described by \cite{hyndman2008b}
+\item \textit{\gls{harima}}:
+          ARIMA calibrated as described by \cite{hyndman2008a}
+\end{enumerate}
+\textit{naive} and \textit{trivial} provide an absolute benchmark for the
+    actual forecasting methods.
+\textit{hcroston} is often mentioned in the context of intermittent demand;
+    however, the method did not perform well at all.
+Besides \textit{hhwinters} that always fits a seasonal component, the
+    calibration heuristics behind \textit{hets} and \textit{harima} may do so
+    as well.
+With $k=7$, an STL decomposition is unnecessary here.

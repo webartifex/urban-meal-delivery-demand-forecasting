@@ -1,0 +1,58 @@
+\section{Tabular and Real-time Forecasts without Retraining}
+\label{tabular_ml_models}
+
+Regarding the structure of the feature matrix for the ML models in Sub-section
+    \ref{ml_models}, we provide an alternative approach that works without
+    the STL method.
+Instead of decomposing a time series and arranging the resulting
+    seasonally-adjusted time series $a_t$ into a matrix $\mat{X}$, one can
+    create a matrix with two types of feature columns mapped to the raw
+    observations in $\vec{y}$:
+While the first group of columns takes all observations of the same time of
+    day over a horizon of, for example, one week ($n_h=7$), the second group
+    takes all observations covering a pre-defined time horizon, for example
+    $3$ hours ($n_r=3$ for 60-minute time steps), preceding the time step to
+    be fitted.
+Thus, we exploit the two-dimensional structure of time tables as well, and
+    conceptually model historical and recent demand.
+The alternative feature matrix appears as follows where the first three
+    columns are the historical and the last three the recent demand features:
+
+$$
+\vec{y}
+=
+\begin{pmatrix}
+    y_T \\
+    y_{T-1} \\
+    \dots \\
+    y_{1+n_hH}
+\end{pmatrix}
+~~~~~
+\mat{X}
+=
+\begin{bmatrix}
+    y_{T-H}              & y_{T-2H}       & \dots & y_{T-n_hH}
+        & y_{T-1}        & y_{T-2}        & \dots & y_{T-n_r} \\
+    y_{T-1-H}            & y_{T-1-2H}     & \dots & y_{T-1-n_hH}
+        & y_{T-2}        & y_{T-3}        & \dots & y_{T-n_r-1} \\
+    \dots                & \dots          & \dots & \dots
+        & \dots          & \dots          & \dots & \dots \\
+    y_{1+(n_h-1)H}       & y_{1+(n_h-2)H} & \dots & y_1
+        & y^*_{1+n_hH-1} & y^*_{1+n_hH-2} & \dots & y^*_{1+n_hH-n_r}
+\end{bmatrix}
+$$
+\
+
+Being a detail, we note that the recent demand features lying on the end of
+    the previous day are set to $0$, which is shown with the $^*$ notation
+    above.
+This alignment of the undecomposed order data $y_t$ ensures that the ML
+    models learn the two seasonal patterns independently.
+The parameters $n_h$ and $n_r$ must be adapted to the data, but we found the
+    above values to work well.
+
+As such matrices resemble time tables, we refer to them as tabular.
+However, we found the ML models with vertical time series to outperform the
+    tabular ML models, which is why we disregarded them in the study.
+This tabular form could be beneficial for UDPs with a demand that exhibits
+    a weaker seasonality such as a meal delivery platform.

@@ -1,0 +1,28 @@
+\subsection{Overall Approach}
+\label{approach_approach}
+
+On a conceptual level, there are three distinct aspects of the model
+    development process.
+First, a pre-processing step transforms the platform's tabular order data into
+    either time series in Sub-section \ref{grid} or feature matrices in
+    Sub-section \ref{ml_models}.
+Second, a benchmark methodology is developed in Sub-section \ref{unified_cv}
+    that compares all models on the same scale, in particular, classical
+    models with ML ones.
+Concretely, the CV approach is adapted to the peculiar requirements of
+    sub-daily and ordinal time series data.
+This is done to maximize the predictive power of all models into the future
+    and to compare them on the same scale.
+Third, the forecasting models are described with respect to their assumptions
+    and training requirements.
+Four classification dimensions are introduced:
+\begin{enumerate}
+\item \textbf{Timeliness of the Information}:
+    whole-day-ahead vs. real-time forecasts
+\item \textbf{Time Series Decomposition}: raw vs. decomposed
+\item \textbf{Algorithm Type}: "classical" statistics vs. ML
+\item \textbf{Data Sources}: pure vs. enhanced (i.e., with external data)
+\end{enumerate}
+Not all of the possible eight combinations are implemented; instead, the
+    models are varied along these dimensions to show different effects and
+    answer the research questions.

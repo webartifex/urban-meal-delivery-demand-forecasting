@@ -1,0 +1,87 @@
+\subsection{Accuracy Measures}
+\label{mase}
+
+Choosing an error measure for both model selection and evaluation is not
+    straightforward when working with intermittent demand, as shown, for
+    example, by \cite{syntetos2005}, and one should understand the trade-offs
+    between measures.
+\cite{hyndman2006} provide a study of measures with real-life data taken from
+    the popular M3-competition and find that most standard measures degenerate
+    under many scenarios.
+They also provide a classification scheme for which we summarize the main
+    points as they apply to the UDP case:
+\begin{enumerate}
+\item \textbf{Scale-dependent Errors}:
+The error is reported in the same unit as the raw data.
+Two popular examples are the root mean square error (RMSE) and mean absolute
+    error (MAE).
+They may be used for model selection and evaluation within a pixel, and are
+    intuitively interpretable; however, they may not be used to compare errors
+    of, for example, a low-demand pixel (e.g., at the UDP's service
+    boundary) with that of a high-demand pixel (e.g., downtown).
+\item \textbf{Percentage Errors}:
+The error is derived from the percentage errors of individual forecasts per
+    time step, and is also intuitively interpretable.
+A popular example is the mean absolute percentage error (MAPE) that is the
+    primary measure in most forecasting competitions.
+Whereas such errors could be applied both within and across pixels, they
+    cannot be calculated reliably for intermittent demand.
+If only one time step exhibits no demand, the result is a divide-by-zero
+    error.
+This often occurs even in high-demand pixels due to the slicing.
+\item \textbf{Relative Errors}:
+A workaround is to calculate a scale-dependent error for the test day and
+    divide it by the same measure calculated with forecasts of a simple
+    benchmark method (e.g., na\"{i}ve method).
+An example could be
+    $\text{RelMAE} = \text{MAE} / \text{MAE}_\text{bm}$.
+Nevertheless, even simple methods create (near-)perfect forecasts, and then
+    $\text{MAE}_\text{bm}$ becomes (close to) $0$.
+These numerical instabilities occurred so often in our studies that we argue
+    against using such measures.
+\item \textbf{Scaled Errors}:
+\cite{hyndman2006} contribute this category and introduce the mean absolute
+    scaled error (\gls{mase}).
+It is defined as the MAE from the actual forecasting method on the test day
+    (i.e., "out-of-sample") divided by the MAE from the (seasonal) na\"{i}ve
+    method on the entire training set (i.e., "in-sample").
+A MASE of $1$ indicates that a forecasting method has the same accuracy
+    on the test day as the (seasonal) na\"{i}ve method applied on a longer
+    horizon, and lower values imply higher accuracy.
+Within a pixel, its results are identical to the ones obtained with MAE.
+Also, we acknowledge recent publications, for example, \cite{prestwich2014} or
+    \cite{kim2016}, showing other ways of tackling the difficulties mentioned.
+However, only the MASE provided numerically stable results for all
+    forecasts in our study.
+\end{enumerate}
+Consequently, we use the MASE with a seasonal na\"{i}ve benchmark as the
+    primary measure in this paper.
+With the previously introduced notation, it is defined as follows:
+$$
+\text{MASE}
+:=
+\frac{\text{MAE}_{\text{out-of-sample}}}{\text{MAE}_{\text{in-sample}}}
+=
+\frac{\text{MAE}_{\text{forecasts}}}{\text{MAE}_{\text{training}}}
+=
+\frac{\frac{1}{H} \sum_{h=1}^H |y_{T+h} - \hat{y}_{T+h}|}
+     {\frac{1}{T-k} \sum_{t=k+1}^T |y_{t} - y_{t-k}|}
+$$
+The denominator can only become $0$ if the seasonal na\"{i}ve benchmark makes
+    a perfect forecast on each day in the training set except the first seven
+    days, which never happened in our case study involving hundreds of
+    thousands of individual model trainings.
+Further, as per the discussion in the subsequent Section \ref{decomp}, we also
+    calculate peak-MASEs where we leave out the time steps of non-peak times
+    from the calculations.
+For this analysis, we define all time steps that occur at lunch (i.e., noon to
+    2 pm) and dinner time (i.e., 6 pm to 8 pm) as peak.
+As time steps in non-peak times typically average no or very low order counts,
+    a UDP may choose to not actively forecast these at all and be rather
+    interested in the accuracies of forecasting methods during peaks only.
+
+We conjecture that percentage error measures may be usable for UDPs facing a
+    higher overall demand with no intra-day down-times in between but have to
+    leave that to a future study.
+Yet, even with high and steady demand, divide-by-zero errors are likely to
+    occur.
