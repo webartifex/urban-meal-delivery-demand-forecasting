@@ -1,0 +1,27 @@
+\subsection{Effects of the Pixel Size and Time Step Length}
+\label{pixels_intervals}
+
+As elaborated in Sub-section \ref{grid}, more order aggregation leads to a
+    higher overall demand level and an improved pattern recognition in the
+    generated time series.
+Consequently, individual cases tend to move to the right in tables equivalent
+    to Table \ref{t:results}.
+With the same $ADD$ clusters, forecasts for pixel sizes of $2~\text{km}^2$ and
+    $4~\text{km}^2$ or time intervals of 90 and 120 minutes or combinations
+    thereof yield results similar to the best models as revealed in Tables
+    \ref{t:results}, \ref{t:hori}, \ref{t:vert}, and \ref{t:ml} for high
+    demand.
+By contrast, forecasts for $0.5~\text{km}^2$ pixels have most of the cases
+    (i.e., $n$) in the no or low demand clusters.
+In that case, the pixels are too small, and pattern recognition becomes
+    harder.
+While it is true, that \textit{trivial} exhibits the overall lowest MASE
+    for no demand cases, these forecasts become effectively worthless for
+    operations.
+In the extreme, with even smaller pixels we would be forecasting $0$ orders
+    in all pixels for all time steps.
+In summary, the best model and its accuracy are determined primarily by the
+    $ADD$, and the pixel size and interval length are merely parameters to
+    control that.
+The forecaster's goal is to create a grid with small enough pixels without
+    losing a recognizable pattern.

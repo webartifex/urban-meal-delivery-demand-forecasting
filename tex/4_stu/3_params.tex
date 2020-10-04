@@ -1,0 +1,37 @@
+\subsection{Calibration of the Time Series Generation Process}
+\label{params}
+
+Independent of the concrete forecasting models, the time series generation
+    must be calibrated.
+We concentrate our forecasts on the pickup side for two reasons.
+First, the restaurants come in a significantly lower number than the
+    customers resulting in more aggregation in the order counts and thus a
+    better pattern recognition.
+Second, from an operational point of view, forecasts for the pickups are more
+    valuable because of the waiting times due to meal preparation.
+We choose pixel sizes of $0.5~\text{km}^2$, $1~\text{km}^2$, $2~\text{km}^2$,
+    and $4~\text{km}^2$, and time steps covering 60, 90, and 120 minute windows
+    resulting in $H_{60}=12$, $H_{90}=9$, and $H_{120}=6$ time steps per day
+    with the platform operating between 11 a.m. and 11 p.m. and corresponding
+    frequencies $k_{60}=7*12=84$, $k_{90}=7*9=63$, and $k_{120}=7*6=42$ for the
+    vertical time series.
+Smaller pixels and shorter time steps yield no recognizable patterns, yet would
+    have been more beneficial for tactical routing.
+90 and 120 minute time steps are most likely not desirable for routing; however,
+    we keep them for comparison and note that a UDP may employ such forecasts
+    to activate more couriers at short notice if a (too) high demand is
+    forecasted in an hour from now.
+This could, for example, be implemented by paying couriers a premium if they
+    show up for work at short notice.
+Discrete lengths of 3, 4, 5, 6, 7, and 8 weeks are chosen as training
+    horizons.
+We do so as the structure within the pixels (i.e., number and kind of
+    restaurants) is not stable for more than two months in a row in the
+    covered horizon.
+That is confirmed by the empirical finding that forecasting accuracy
+    improves with longer training horizon but this effect starts to
+    level off after about six to seven weeks.
+So, the demand patterns of more than two months ago do not resemble more
+    recent ones.
+
+In total, 100,000s of distinct time series are forecast in the study.
