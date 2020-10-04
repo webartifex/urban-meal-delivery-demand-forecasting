@@ -1,0 +1,238 @@
+\subsection{Overall Results}
+\label{overall_results}
+
+Table \ref{t:results} summarizes the overall best-performing models grouped by
+    training horizon and a pixel's average daily demand (\gls{add}) for a
+    pixel size of $1~\text{km}^2$ and 60-minute time steps.
+Each combination of pixel and test day counts as one case, and the total
+    number of cases is denoted as $n$.
+Clustering the individual results revealed that a pixel's ADD over the
+    training horizon is the primary indicator of similarity and three to four
+    clusters suffice to obtain cohesive clusters:
+We labeled them "no", "low", "medium", and "high" demand pixels with
+    increasing ADD, and present the average MASE per cluster.
+The $n$ do not vary significantly across the training horizons, which confirms
+    that the platform did not grow area-wise and is indeed in a steady-state.
+We use this table to answer \textbf{Q1} regarding the overall best methods
+    under different ADDs.
+All result tables in the main text report MASEs calculated with all time
+    steps of a day.
+In contrast, \ref{peak_results} shows the same tables with MASEs calculated
+    with time steps within peak times only (i.e., lunch from 12 pm to 2 pm and
+    dinner from 6 pm to 8 pm).
+The differences lie mainly in the decimals of the individual MASE
+    averages while the ranks of the forecasting methods do not change except
+    in rare cases.
+That shows that the presented accuracies are driven by the forecasting methods'
+    accuracies at peak times.
+Intuitively, they all correctly predict zero demand for non-peak times.
+ 
+Unsurprisingly, the best model for pixels without demand (i.e.,
+    $0 < \text{ADD} < 2.5$) is \textit{trivial}.
+Whereas \textit{hsma} also adapts well, its performance is worse.
+None of the more sophisticated models reaches a similar accuracy.
+The intuition behind is that \textit{trivial} is the least distorted by the
+    relatively large proportion of noise given the low-count nature of the
+    time series.
+
+For low demand (i.e., $2.5 < \text{ADD} < 10$), there is also a clear
+    best-performing model, namely \textit{hsma}.
+As the non-seasonal \textit{hses} reaches a similar accuracy as its
+    potentially seasonal generalization, the \textit{hets}, we conclude that
+    the seasonal pattern from weekdays is not yet strong enough to be
+    recognized in low demand pixels.
+So, in the absence of seasonality, models that only model a trend part are
+    the least susceptible to the noise.
+
+For medium demand (i.e., $10 < \text{ADD} < 25$) and training horizons up to
+    six weeks, the best-performing models are the same as for low demand.
+For longer horizons, \textit{hets} provides the highest accuracy.
+Thus, to fit a seasonal pattern, longer training horizons are needed.
+While \textit{vsvr} enters the top three, \textit{hets} has the edge as they
+    neither require parameter tuning nor real-time data.
+
+\begin{center}
+\captionof{table}{Top-3 models by training weeks and average demand
+                  ($1~\text{km}^2$ pixel size, 60-minute time steps)}
+\label{t:results}
+\begin{tabular}{|c|c|*{12}{c|}}
+
+\hline
+\multirow{3}{*}{\rotatebox{90}{\thead{Training}}}
+    & \multirow{3}{*}{\rotatebox{90}{\thead{Rank}}}
+    & \multicolumn{3}{c|}{\thead{No Demand}}
+    & \multicolumn{3}{c|}{\thead{Low Demand}}
+    & \multicolumn{3}{c|}{\thead{Medium Demand}}
+    & \multicolumn{3}{c|}{\thead{High Demand}} \\
+~ & ~
+    & \multicolumn{3}{c|}{(0 - 2.5)}
+    & \multicolumn{3}{c|}{(2.5 - 10)}
+    & \multicolumn{3}{c|}{(10 - 25)}
+    & \multicolumn{3}{c|}{(25 - $\infty$)} \\
+\cline{3-14}
+~ & ~
+    & Method & MASE & $n$
+    & Method & MASE & $n$
+    & Method & MASE & $n$
+    & Method & MASE & $n$ \\
+
+\hline \hline
+\multirow{3}{*}{3} & 1
+    & \textbf{\textit{trivial}}
+        & 0.785 & \multirow{3}{*}{\rotatebox{90}{4586}}
+    & \textbf{\textit{hsma}}
+        & 0.819 & \multirow{3}{*}{\rotatebox{90}{2975}}
+    & \textbf{\textit{hsma}}
+        & 0.839 & \multirow{3}{*}{\rotatebox{90}{2743}}
+    & \textbf{\textit{rtarima}}
+        & 0.872 & \multirow{3}{*}{\rotatebox{90}{2018}} \\
+~ & 2
+    & \textit{hsma}    & 0.809 & ~
+    & \textit{hses}    & 0.844 & ~
+    & \textit{hses}    & 0.858 & ~
+    & \textit{rtses}   & 0.873 & ~ \\
+~ & 3
+    & \textit{pnaive}  & 0.958 & ~
+    & \textit{hets}    & 0.846 & ~
+    & \textit{hets}    & 0.859 & ~
+    & \textit{rtets}   & 0.877 & ~ \\
+
+\hline
+\multirow{3}{*}{4} & 1
+    & \textbf{\textit{trivial}}
+        & 0.770 & \multirow{3}{*}{\rotatebox{90}{4532}}
+    & \textbf{\textit{hsma}}
+        & 0.825 & \multirow{3}{*}{\rotatebox{90}{3033}}
+    & \textbf{\textit{hsma}}
+        & 0.837 & \multirow{3}{*}{\rotatebox{90}{2687}}
+    & \textbf{\textit{vrfr}}
+        & 0.855 & \multirow{3}{*}{\rotatebox{90}{2016}} \\
+~ & 2
+    & \textit{hsma}             & 0.788 & ~
+    & \textit{hses}             & 0.848 & ~
+    & \textit{hses}             & 0.850 & ~
+    & \textbf{\textit{rtarima}} & 0.855 & ~ \\
+~ & 3
+    & \textit{pnaive}  & 0.917 & ~
+    & \textit{hets}    & 0.851 & ~
+    & \textit{hets}    & 0.854 & ~
+    & \textit{rtses}   & 0.860 & ~ \\
+
+\hline
+\multirow{3}{*}{5} & 1
+    & \textbf{\textit{trivial}}
+        & 0.780 & \multirow{3}{*}{\rotatebox{90}{4527}}
+    & \textbf{\textit{hsma}}
+        & 0.841 & \multirow{3}{*}{\rotatebox{90}{3055}}
+    & \textbf{\textit{hsma}}
+        & 0.837 & \multirow{3}{*}{\rotatebox{90}{2662}}
+    & \textbf{\textit{vrfr}}
+        & 0.850 & \multirow{3}{*}{\rotatebox{90}{2019}} \\
+~ & 2
+    & \textit{hsma}             & 0.803 & ~
+    & \textit{hses}             & 0.859 & ~
+    & \textit{hets}             & 0.845 & ~
+    & \textbf{\textit{rtarima}} & 0.852 & ~ \\
+~ & 3
+    & \textit{pnaive}  & 0.889 & ~
+    & \textit{hets}    & 0.861 & ~
+    & \textit{hses}    & 0.845 & ~
+    & \textit{vsvr}    & 0.854 & ~ \\
+
+\hline
+\multirow{3}{*}{6} & 1
+    & \textbf{\textit{trivial}}
+        & 0.741 & \multirow{3}{*}{\rotatebox{90}{4470}}
+    & \textbf{\textit{hsma}}
+        & 0.847 & \multirow{3}{*}{\rotatebox{90}{3086}}
+    & \textbf{\textit{hsma}}
+        & 0.840 & \multirow{3}{*}{\rotatebox{90}{2625}}
+    & \textbf{\textit{vrfr}}
+        & 0.842 & \multirow{3}{*}{\rotatebox{90}{2025}} \\
+~ & 2
+    & \textit{hsma}             & 0.766 & ~
+    & \textit{hses}             & 0.863 & ~
+    & \textit{hets}             & 0.842 & ~
+    & \textbf{\textit{hets}}    & 0.847 & ~ \\
+~ & 3
+    & \textit{pnaive}  & 0.837 & ~
+    & \textit{hets}    & 0.865 & ~
+    & \textit{hses}    & 0.848 & ~
+    & \textit{vsvr}    & 0.848 & ~ \\
+
+\hline
+\multirow{3}{*}{7} & 1
+    & \textbf{\textit{trivial}}
+        & 0.730 & \multirow{3}{*}{\rotatebox{90}{4454}}
+    & \textbf{\textit{hsma}}
+        & 0.858 & \multirow{3}{*}{\rotatebox{90}{3132}}
+    & \textbf{\textit{hets}}
+        & 0.845 & \multirow{3}{*}{\rotatebox{90}{2597}}
+    & \textbf{\textit{hets}}
+        & 0.840 & \multirow{3}{*}{\rotatebox{90}{2007}} \\
+~ & 2
+    & \textit{hsma}          & 0.754 & ~
+    & \textit{hses}          & 0.871 & ~
+    & \textit{hsma}          & 0.847 & ~
+    & \textbf{\textit{vrfr}} & 0.845 & ~ \\
+~ & 3
+    & \textit{pnaive}        & 0.813 & ~
+    & \textit{hets}          & 0.872 & ~
+    & \textbf{\textit{vsvr}} & 0.850 & ~
+    & \textit{vsvr}          & 0.847 & ~ \\
+
+\hline
+\multirow{3}{*}{8} & 1
+    & \textbf{\textit{trivial}}
+        & 0.735 & \multirow{3}{*}{\rotatebox{90}{4402}}
+    & \textbf{\textit{hsma}}
+        & 0.867 & \multirow{3}{*}{\rotatebox{90}{3159}}
+    & \textbf{\textit{hets}}
+        & 0.846 & \multirow{3}{*}{\rotatebox{90}{2575}}
+    & \textbf{\textit{hets}}
+        & 0.836 & \multirow{3}{*}{\rotatebox{90}{2002}} \\
+~ & 2
+    & \textit{hsma}          & 0.758 & ~
+    & \textit{hets}          & 0.877 & ~
+    & \textbf{\textit{vsvr}} & 0.850 & ~
+    & \textbf{\textit{vrfr}} & 0.842 & ~ \\
+~ & 3
+    & \textit{pnaive}  & 0.811 & ~
+    & \textit{hses}    & 0.880 & ~
+    & \textit{hsma}    & 0.851 & ~
+    & \textit{vsvr}    & 0.849 & ~ \\
+
+\hline
+\end{tabular}
+\end{center}
+
+In summary, except for high demand, simple models trained on horizontal time
+    series work best.
+By contrast, high demand (i.e., $25 < \text{ADD} < \infty$) and less than
+    six training weeks is the only situation where classical models trained on
+    vertical time series work well.
+Then, \textit{rtarima} outperforms their siblings from Sub-sections
+    \ref{vert} and \ref{rt}.
+We conjecture that intra-day auto-correlations as caused, for example, by
+    weather, are the reason for that.
+Intuitively, a certain amount of demand (i.e., a high enough signal-to-noise
+    ratio) is required such that models with auto-correlations can see them
+    through all the noise.
+That idea is supported by \textit{vrfr} reaching a similar accuracy under
+    high demand as their tree-structure allows them to fit auto-correlations.
+As both \textit{rtarima} and \textit{vrfr} incorporate recent demand,
+    real-time information can indeed improve accuracy.
+However, once models are trained on longer horizons, \textit{hets} is more
+    accurate than \textit{vrfr}.
+Thus, to answer \textbf{Q4}, we conclude that real-time information only
+    improves accuracy if three or four weeks of training material are
+    available.
+
+In addition to looking at the results in tables covering the entire one-year
+    horizon, we also created sub-analyses on the distinct seasons spring,
+    summer (incl. the long holiday season in France), and fall.
+Yet, none of the results portrayed in this and the subsequent sections change
+    is significant ways.
+We conjecture that there could be differences if the overall demand of the UDP
+    increased to a scale beyond the one this case study covers and leave that
+    up to a follow-up study with a bigger UDP.

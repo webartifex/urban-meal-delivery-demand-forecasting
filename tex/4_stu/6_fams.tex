@@ -1,0 +1,162 @@
+\subsection{Results by Model Families}
+\label{fams}
+
+Besides the overall results, we provide an in-depth comparison of models
+    within a family.
+Instead of reporting the MASE per model, we rank the models holding the
+    training horizon fixed to make comparison easier.
+Table \ref{t:hori} presents the models trained on horizontal time series.
+In addition to \textit{naive}, we include \textit{fnaive} and \textit{pnaive}
+    already here as more competitive benchmarks.
+The tables in this section report two rankings simultaneously:
+The first number is the rank resulting from lumping the low and medium
+    clusters together, which yields almost the same rankings when analyzed
+    individually.
+The ranks from only high demand pixels are in parentheses if they differ.
+
+\begin{center}
+\captionof{table}{Ranking of benchmark and horizontal models
+                  ($1~\text{km}^2$ pixel size, 60-minute time steps):
+                  the table shows the ranks for cases with $2.5 < ADD < 25$
+                  (and $25 < ADD < \infty$ in parentheses if they differ)}
+\label{t:hori}
+\begin{tabular}{|c|ccc|cccccccc|}
+\hline
+\multirow{2}{*}{\rotatebox{90}{\thead{\scriptsize{Training}}}}
+    & \multicolumn{3}{c|}{\thead{Benchmarks}}
+    & \multicolumn{8}{c|}{\thead{Horizontal (whole-day-ahead)}} \\
+\cline{2-12}
+~ & \textit{naive}     & \textit{fnaive}   & \textit{paive}
+  & \textit{harima}    & \textit{hcroston} & \textit{hets} & \textit{hholt}
+  & \textit{hhwinters} & \textit{hses}     & \textit{hsma} & \textit{htheta} \\
+\hline \hline
+3 & 11      &  7 (2) &  8 (5) & 5 (7) & 4     & 3
+  &  9 (10) & 10 (9) &  2 (6) & 1     & 6 (8) \\
+4 & 11      &  7 (2) &  8 (3) & 5 (6) & 4 (5) & 3 (1)
+  &  9 (10) & 10 (9) &  2 (7) & 1 (4) & 6 (8) \\
+5 & 11      &  7 (2) &  8 (4) & 5 (3) & 4 (9) & 3 (1)
+  &  9 (10) & 10 (5) &  2 (8) & 1 (6) & 6 (7) \\
+6 & 11      &  8 (5) &  9 (6) & 5 (4) & 4 (7) & 2 (1)
+  & 10      &  7 (2) &  3 (8) & 1 (9) & 6 (3)  \\
+7 & 11      &  8 (5) & 10 (6) & 5 (4) & 4 (7) & 2 (1)
+  &  9 (10) &  7 (2) &  3 (8) & 1 (9) & 6 (3) \\
+8 & 11      &  9 (5) & 10 (6) & 5 (4) & 4 (7) & 2 (1)
+  &  8 (10) &  7 (2) &  3 (8) & 1 (9) & 6 (3) \\
+\hline
+\end{tabular}
+\end{center}
+\
+
+A first insight is that \textit{fnaive} is the best benchmark in all
+    scenarios:
+Decomposing flexibly by tuning the $ns$ parameter is worth the computational
+    cost.
+Further, if one is limited in the number of non-na\"{i}ve methods,
+    \textit{hets} is the best compromise and works well across all demand
+    levels.
+It is also the best model independent of the training horizon for high demand.
+With low or medium demand, \textit{hsma} is the clear overall winner; yet,
+    with high demand, models with a seasonal fit (i.e., \textit{harima},
+    \textit{hets}, and \textit{hhwinters}) are more accurate, in particular,
+    for longer training horizons.
+This is due to demand patterns in the weekdays becoming stronger with higher
+    overall demand.
+
+\begin{center}
+\captionof{table}{Ranking of classical models on vertical time series
+                  ($1~\text{km}^2$ pixel size, 60-minute time steps):
+                  the table shows the ranks for cases with $2.5 < ADD < 25$
+                  (and $25 < ADD < \infty$ in parentheses if they differ)}
+\label{t:vert}
+\begin{tabular}{|c|cc|ccccc|ccccc|}
+\hline
+\multirow{2}{*}{\rotatebox{90}{\thead{\scriptsize{Training}}}}
+    & \multicolumn{2}{c|}{\thead{Benchmarks}}
+    & \multicolumn{5}{c|}{\thead{Vertical (whole-day-ahead)}}
+    & \multicolumn{5}{c|}{\thead{Vertical (real-time)}} \\
+\cline{2-13}
+~ & \textit{hets}  & \textit{hsma}   & \textit{varima} & \textit{vets} 
+  & \textit{vholt} & \textit{vses}   & \textit{vtheta} & \textit{rtarima}
+  & \textit{rtets} & \textit{rtholt} & \textit{rtses}  & \textit{rttheta} \\
+\hline \hline
+3 &  2 (10) &  1  (7) & 6 (4) & 8 (6) & 10 (9)
+  &  7  (5) & 11 (12) & 4 (1) & 5 (3) &  9 (8) & 3 (2) & 12 (11) \\
+4 &  2  (8) &  1 (10) & 6 (4) & 8 (6) & 10 (9)
+  &  7  (5) & 12 (11) & 3 (1) & 5 (3) &  9 (7) & 4 (2) & 11 (12) \\
+5 &  2  (3) &  1 (10) & 7 (5) & 8 (7) & 10 (9)
+  &  6      & 11      & 4 (1) & 5 (4) &  9 (8) & 3 (2) & 12 \\
+6 &  2  (1) &  1 (10) & 6 (5) & 8 (7) & 10 (9)
+  &  7  (6) & 11 (12) & 3 (2) & 5 (4) &  9 (8) & 4 (3) & 12 (11) \\
+7 &  2  (1) &  1 (10) & 8 (5) & 7     & 10 (9)
+  &  6      & 11 (12) &	5 (2) & 4     &  9 (8) & 3     & 12 (11) \\
+8 &  2  (1) &  1  (9) & 8 (5) & 7 (6) & 10 (8)
+  &  6      & 12 (10) & 5 (2) & 4     &  9 (7) & 3     & 11 \\
+\hline
+\end{tabular}
+\end{center}
+\
+
+Table \ref{t:vert} extends the previous analysis to classical models trained
+    on vertical time series.
+Now, the winners from before, \textit{hets} and \textit{hsma}, serve as
+    benchmarks.
+Whereas for low and medium demand, no improvements can be obtained,
+    \textit{rtarima} and \textit{rtses} are the most accurate with high demand
+    and short training horizons.
+For six or more training weeks, \textit{hets} is still optimal.
+Independent of retraining and the demand level, the models' relative
+    performances are consistent:
+The \textit{*arima} and \textit{*ses} models are best, followed by
+    \textit{*ets}, \textit{*holt}, and \textit{*theta}.
+Thus, models that can deal with auto-correlations and short-term forecasting
+    errors, as expressed by moving averages, and that cannot be distracted by
+    trend terms are optimal for vertical series.
+
+Finally, Table \ref{t:ml} compares the two ML-based models against the
+    best-performing classical models and answers \textbf{Q2}:
+With low and medium demand, no improvements can be obtained again; however,
+    with high demand, \textit{vrfr} has the edge over \textit{rtarima} for
+    training horizons up to six weeks.
+We conjecture that \textit{vrfr} fits auto-correlations better than
+    \textit{varima} and is not distracted by short-term noise as
+    \textit{rtarima} may be due to the retraining.
+With seven or eight training weeks, \textit{hets} remains the overall winner.
+Interestingly, \textit{vsvr} is more accurate than \textit{vrfr} for low and
+    medium demand.
+We assume that \textit{vrfr} performs well only with strong auto-correlations,
+    which are not present with low and medium demand.
+
+\begin{center}
+\captionof{table}{Ranking of ML models on vertical time series
+                  ($1~\text{km}^2$ pixel size, 60-minute time steps):
+                  the table shows the ranks for cases with $2.5 < ADD < 25$
+                  (and $25 < ADD < \infty$ in parentheses if they differ)}
+\label{t:ml}
+\begin{tabular}{|c|cccc|cc|}
+\hline
+\multirow{2}{*}{\rotatebox{90}{\thead{\scriptsize{Training}}}}
+    & \multicolumn{4}{c|}{\thead{Benchmarks}}
+    & \multicolumn{2}{c|}{\thead{ML}} \\
+\cline{2-7}
+~ & \textit{fnaive}  & \textit{hets} & \textit{hsma}
+  & \textit{rtarima} & \textit{vrfr} & \textit{vsvr} \\
+\hline \hline
+3 & 6     & 2 (5) & 1 (4) & 3 (1) & 5 (2) & 4 (3) \\
+4 & 6 (5) & 2 (4) & 1 (6) & 3 (2) & 5 (1) & 4 (3) \\
+5 & 6 (5) & 2 (4) & 1 (6) & 4 (2) & 5 (1) & 3 \\
+6 & 6 (5) & 2     & 1 (6) & 4     & 5 (1) & 3 \\
+7 & 6 (5) & 2 (1) & 1 (6) & 4     & 5 (2) & 3 \\
+8 & 6 (5) & 2 (1) & 1 (6) & 4     & 5 (2) & 3 \\
+\hline
+\end{tabular}
+\end{center}
+\
+
+Analogously, we created tables like Table \ref{t:hori} to \ref{t:ml} for the
+    forecasts with time steps of 90 and 120 minutes and find that the relative
+    rankings do not change significantly.
+The same holds true for the rankings with changing pixel sizes.
+For conciseness reasons, we do not include these additional tables in this
+    article.
+In summary, the relative performances exhibited by certain model families
+    are shown to be rather stable in this case study.
