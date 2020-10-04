@@ -1,2 +1,102 @@
 \section{Introduction}
 \label{intro}
+
+In recent years, many meal delivery platform providers (e.g., Uber Eats,
+    GrubHub, DoorDash, Deliveroo) with different kinds of business models have
+    entered the markets in cities around the world.
+A study by \cite{hirschberg2016} estimates the global market size to surpass
+    20 billion Dollars by 2025.
+A common feature of these platforms is that they do not operate kitchens but
+    focus on marketing their partner restaurants' meals, unifying all order
+    related processes in simple smartphone apps, and managing the delivery via
+    a fleet of either employees or crowd-sourced sub-contractors.
+
+Various kind of urban delivery platforms (UDP) have received attention in
+    recent scholarly publications.
+\cite{hou2018} look into heuristics to simultaneously optimize courier
+    scheduling and routing in general, while \cite{masmoudi2018} do so
+    for the popular dial-a-ride problem and \cite{wang2018} investigate
+    the effect of different fulfillment strategies in the context of urban
+    meal delivery.
+\cite{ehmke2018} and \cite{alcaraz2019} focus their research on the routing
+    aspect, which is commonly modeled as a so-called vehicle routing problem
+    (\gls{vrp}).
+
+Not covered in the recent literature is research focusing on the demand
+    forecasting problem a UDP faces.
+Due to the customers' fragmented locations and the majority of the orders
+    occurring ad-hoc for immediate delivery in the case of a meal delivery
+    platform, forecasting demand for the near future (i.e., several hours)
+    and distinct locations of the city in real-time is an essential factor
+    in achieving timely fulfillment.
+In general, demand forecasting is a well-researched discipline with a
+    decades-long history in scholarly journals as summarized, for example, by
+    \cite{de2006}.
+Even some meal delivery platforms themselves publish their practices: For
+    example, \cite{bell2018} provide a general overview of supply and demand
+    forecasting at Uber and benchmarks of the methods used while
+    \cite{laptev2017} investigate how extreme events can be incorporated.
+
+The conditions such platforms face are not limited to meal delivery:
+    Any entity that performs ad-hoc requested point-to-point transportation at
+    scale in an urban area benefits from a robust forecasting system.
+Examples include ride-hailing, such as the original Uber offering, or bicycle
+    courier services.
+The common characteristics are:
+\begin{itemize}
+\item \textbf{Geospatial Slicing}:
+    Forecasts for distinct parts of a city in parallel
+\item \textbf{Temporal Slicing}:
+    Forecasts on a sub-daily basis (e.g., 60-minute windows)
+\item \textbf{Order Sparsity}:
+    The historical order time series exhibit an intermittent pattern
+\item \textbf{Double Seasonality}:
+    Demand varies with the day of the week and the time of day
+\end{itemize}
+Whereas the first two points can be assumed to vary with the concrete
+	application's requirements, it is the last two that pose challenges for
+	forecasting a platform's demand:
+Intermittent demand (i.e., many observations in the historic order time series
+    exhibit no demand at all) renders most of the commonly applied error
+    metrics useless.
+Moreover, many of the established forecasting methods can only handle a single
+    and often low seasonality (i.e., repeated regular pattern), if at all.
+
+In this paper, we develop a rigorous methodology as to how to build and
+    evaluate a robust forecasting system for an urban delivery platform
+    (\gls{udp}) that offers ad-hoc point-to-point transportation of any kind.
+We implement such a system with a broad set of commonly used forecasting
+    methods.
+We not only apply established (i.e., "classical") time series methods but also
+    machine learning (\gls{ml}) models that have gained traction in recent
+    years due to advancements in computing power and availability of larger
+    amounts of data.
+In that regard, the classical methods serve as benchmarks for the ML methods.
+Our system is trained on and evaluated with a dataset obtained from an
+    undisclosed industry partner that, during the timeframe of our study, was
+    active in several European countries and, in particular, in France.
+Its primary business strategy is the delivery of meals from upper-class
+    restaurants to customers in their home or work places via bicycles.
+In this empirical study, we identify the best-performing methods.
+Thus, we answer the following research questions:
+\begin{enumerate}
+\item[\textbf{Q1}:]
+    Which forecasting methods work best under what circumstances?
+\item[\textbf{Q2}:]
+    How do classical forecasting methods compare with ML models?
+\item[\textbf{Q3}:]
+    How does the forecast accuracy change with more historic data available?
+\item[\textbf{Q4}:]
+    Can real-time information on demand be exploited?
+\item[\textbf{Q5}:]
+    Can external data (e.g., weather data) improve the forecast accuracy?
+\end{enumerate}
+To the best of our knowledge, no such study has yet been published in a
+    scholarly journal.
+
+The subsequent Section \ref{lit} reviews the literature on the forecasting
+    methods included in the system.
+Section \ref{mod} introduces our forecasting system, and Section \ref{stu}
+    discusses the results obtained in the empirical study.
+Lastly, Section \ref{con} summarizes our findings and concludes
+    with an outlook on further research opportunities.
