@@ -1,0 +1,62 @@
+\subsubsection{Seasonal and Trend Decomposition using Loess.}
+\label{stl}
+
+A time series $y_t$ may exhibit different types of patterns; to fully capture
+    each of them, the series must be decomposed.
+Then, each component is forecast with a distinct model.
+Most commonly, the components are the trend $t_t$, seasonality $s_t$, and
+    remainder $r_t$.
+They are themselves time series, where only $s_t$ exhibits a periodicity $k$.
+A decomposition may be additive (i.e., $y_t = s_t + t_t + r_t$) or
+    multiplicative (i.e., $y_t = s_t * t_t * r_t$); the former assumes that
+    the effect of the seasonal component is independent of the overall level
+    of $y_t$ and vice versa.
+The seasonal component is centered around $0$ in both cases such that its
+    removal does not affect the level of $y_t$.
+Often, it is sufficient to only seasonally adjust the time series, and model
+    the trend and remainder together, for example, as $a_t = y_t - s_t$ in the
+    additive case.
+
+Early approaches employed moving averages (cf., Sub-section \ref{ets}) to
+    calculate a trend component, and, after removing that from $y_t$, averaged
+    all observations of the same seasonal lag to obtain the seasonal
+    component.
+The downsides of this are the subjectivity in choosing the window lengths for
+    the moving average and the seasonal averaging, the incapability of the
+    seasonal component to vary its amplitude over time, and the missing
+    handling of outliers.
+
+The X11 method developed at the U.S. Census Bureau and described in detail by
+    \cite{dagum2016} overcomes these disadvantages.
+However, due to its background in economics, it is designed primarily for
+    quarterly or monthly data, and the change in amplitude over time cannot be
+    controlled.
+Variants of this method are the SEATS decomposition by the Bank of Spain and
+    the newer X13-SEATS-ARIMA method by the U.S. Census Bureau.
+Their main advantages stem from the fact that the models calibrate themselves
+    according to statistical criteria without manual work for a statistician
+    and that the fitting process is robust to outliers.
+
+\cite{cleveland1990} introduce a seasonal and trend decomposition using a
+    repeated locally weighted regression - the so-called Loess procedure - to
+    smoothen the trend and seasonal components, which can be viewed as a
+    generalization of the methods above and is denoted by the acronym
+    \gls{stl}.
+In contrast to the X11, X13, and SEATS methods, the STL supports seasonalities
+    of any lag $k$ that must, however, be determined with additional
+    statistical tests or set with out-of-band knowledge by the forecaster
+    (e.g., hourly demand data implies $k = 24 * 7 = 168$ assuming customer
+    behavior differs on each day of the week).
+Moreover, the seasonal component's rate of change, represented by the $ns$
+    parameter and explained in detail with Figure \ref{f:stl} in Section
+    \ref{decomp}, must be set by the forecaster as well, while the trend's
+    smoothness may be controlled via setting a non-default window size.
+Outliers are handled by assignment to the remainder such that they do not
+    affect the trend and seasonal components.
+In particular, the manual input needed to calibrate the STL explains why only
+    the X11, X13, and SEATS methods are widely used by practitioners.
+However, the widespread adoption of concepts like cross-validation (cf.,
+    Sub-section \ref{cv}) in recent years enables the usage of an automated
+    grid search to optimize the parameters.
+The STL's usage within a grid search is facilitated even further by its being
+    computationally cheaper than the other methods discussed.

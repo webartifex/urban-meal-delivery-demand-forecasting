@@ -1,2 +1,17 @@
 \section{Literature Review}
 \label{lit}
+
+In this section, we review the specific forecasting methods that make up our
+    forecasting system.
+We group them into classical statistics and ML models.
+The two groups differ mainly in how they represent the input data and how
+    accuracy is evaluated.
+
+A time series is a finite and ordered sequence of equally spaced observations.
+Thus, time is regarded as discrete and a time step as a short period.
+Formally, a time series $Y$ is defined as $Y = \{y_t: t \in I\}$, or $y_t$ for
+    short, where $I$ is an index set of positive integers.
+Besides its length $T = |Y|$, another property is the a priori fixed and
+    non-negative periodicity $k$ of a seasonal pattern in demand:
+$k$ is the number of time steps after which a pattern repeats itself (e.g.,
+    $k=12$ for monthly sales data).

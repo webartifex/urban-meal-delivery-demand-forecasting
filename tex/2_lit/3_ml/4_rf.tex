@@ -1,0 +1,66 @@
+\subsubsection{Random Forest Regression.}
+\label{rf}
+
+\cite{breiman1984} introduce the classification and regression tree
+    (\gls{cart}) model that is built around the idea that a single binary
+    decision tree maps learned combinations of intervals of the feature
+    columns to a label.
+Thus, each sample in the training set is associated with one leaf node that
+    is reached by following the tree from its root and branching along the
+    arcs according to some learned splitting rule per intermediate node that
+    compares the sample's realization for the feature specified by the rule to
+    the learned decision rule.
+While such models are computationally fast and offer a high degree of
+    interpretability, they tend to overfit strongly to the training set as
+    the splitting rules are not limited to any functional form (e.g., linear)
+    in the relationship between the features and the labels.
+In the regression case, it is common to maximize the variance reduction $I_V$
+    from a parent node $N$ to its two children, $C1$ and $C2$, as the
+    splitting rule.
+\cite{breiman1984} formulate this as follows:
+$$
+I_V(N)
+=
+\frac{1}{|S_N|^2} \sum_{i \in S_N} \sum_{j \in S_N}
+    \frac{1}{2} (y_i - y_j)^2
+- \left(
+    \frac{1}{|S_{C1}|^2} \sum_{i \in S_{C1}} \sum_{j \in S_{C1}}
+        \frac{1}{2} (y_i - y_j)^2
+    +
+    \frac{1}{|S_{C2}|^2} \sum_{i \in S_{C2}} \sum_{j \in S_{C2}}
+        \frac{1}{2} (y_i - y_j)^2
+\right)
+$$
+$S_N$, $S_{C1}$, and $S_{C2}$ are the index sets of the samples in $N$, $C1$,
+    and $C2$. 
+
+\cite{ho1998} and then \cite{breiman2001} generalize this method by combining
+    many CART models into one forest of trees where every single tree is
+    a randomized variant of the others.
+Randomization is achieved at two steps in the training process:
+First, each tree receives a distinct training set resampled with replacement
+    from the original training set, an idea also called bootstrap
+    aggregation.
+Second, at each node a random subset of the features is used to grow the tree.
+Trees can be fitted in parallel speeding up the training significantly.
+For prediction at the tree level, the average of all the samples at a
+    particular leaf node is used.
+Then, the individual values are combined into one value by averaging again
+    across the trees.
+Due to the randomization, the trees are decorrelated offsetting the
+    overfitting.
+Another measure to counter overfitting is pruning the tree, either by
+    specifying the maximum depth of a tree or the minimum number of samples
+    at leaf nodes.
+
+The forecaster must tune the structure of the forest.
+Parameters include the number of trees in the forest, the size of the random
+    subset of features, and the pruning criteria.
+The parameters are optimized via grid search: We train many models with
+    parameters chosen from a pre-defined list of values and select the best
+    one by CV.
+RFs are a convenient ML method for any dataset as decision trees do not
+    make any assumptions about the relationship between features and labels.
+\cite{herrera2010} use RFs to predict the hourly demand for water in an urban
+    context, a similar application as the one in this paper, and find that RFs
+    work well with time series type of data.
