@@ -10,8 +10,9 @@ Somewhat surprisingly, despite ML-based methods` popularity in both business
     and academia in recent years, we must conclude that classical forecasting
     methods suffice to reach the best accuracy in our study.
 There is one case where ML-based methods are competitive in our case study:
-    In a high demand pixel, if only about four to six weeks of past data is
-    available, the \textit{vrfr} model outperformed the classical ones.
+    In a high demand pixel (defined as more than 25 orders per day on average),
+    if only about four to six weeks of past data is available,
+    the \textit{vrfr} model outperformed the classical ones.
 So, we recommend trying out ML-based methods in such scenarios.
 In addition, with the \textit{hsma} and \textit{hets} models being the overall
     winners, incorporating real-time data is not beneficial, in particular,
@@ -53,6 +54,8 @@ We emphasize that for the most part, our proposed forecasting system
     is calibrated automatically and no manual work by a data scientist is required.
 The only two parameters where assumptions need to be made are the pixel size
     and the time step.
-While they can only be optimized by the data scientist over time, the results in our
-    empirical study suggest that a pixel size of $1~\text{km}^2$ and a time step of
-    one hour are ideal.
+The results in our empirical study suggest
+    that a pixel size of $1~\text{km}^2$ and a time step of one hour are ideal,
+    which results in the optimal trade-off
+    between signal strength and spatial-temporal resolution.
+Future research may explore adaptive grid-sizing depending on, for instance, demand density.
