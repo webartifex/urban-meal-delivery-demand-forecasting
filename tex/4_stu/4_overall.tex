@@ -13,36 +13,6 @@ We labeled them "no", "low", "medium", and "high" demand pixels with
     increasing ADD, and present the average MASE per cluster.
 The $n$ do not vary significantly across the training horizons, which confirms
     that the platform did not grow area-wise and is indeed in a steady-state.
-We use this table to answer \textbf{Q1} regarding the overall best methods
-    under different ADDs.
-All result tables in the main text report MASEs calculated with all time
-    steps of a day.
-In contrast, \ref{peak_results} shows the same tables with MASEs calculated
-    with time steps within peak times only (i.e., lunch from 12 pm to 2 pm and
-    dinner from 6 pm to 8 pm).
-The differences lie mainly in the decimals of the individual MASE
-    averages while the ranks of the forecasting methods do not change except
-    in rare cases.
-That shows that the presented accuracies are driven by the forecasting methods'
-    accuracies at peak times.
-Intuitively, they all correctly predict zero demand for non-peak times.
- 
-Unsurprisingly, the best model for pixels without demand (i.e.,
-    $0 < \text{ADD} < 2.5$) is \textit{trivial}.
-Whereas \textit{hsma} also adapts well, its performance is worse.
-None of the more sophisticated models reaches a similar accuracy.
-The intuition behind is that \textit{trivial} is the least distorted by the
-    relatively large proportion of noise given the low-count nature of the
-    time series.
-
-For low demand (i.e., $2.5 < \text{ADD} < 10$), there is also a clear
-    best-performing model, namely \textit{hsma}.
-As the non-seasonal \textit{hses} reaches a similar accuracy as its
-    potentially seasonal generalization, the \textit{hets}, we conclude that
-    the seasonal pattern from weekdays is not yet strong enough to be
-    recognized in low demand pixels.
-So, in the absence of seasonality, models that only model a trend part are
-    the least susceptible to the noise.
 
 \begin{center}
 \captionof{table}{Top-3 models by training weeks and average demand
@@ -198,6 +168,38 @@ So, in the absence of seasonality, models that only model a trend part are
 \hline
 \end{tabular}
 \end{center}
+\
+
+We use this table to answer \textbf{Q1} regarding the overall best methods
+    under different ADDs.
+All result tables in the main text report MASEs calculated with all time
+    steps of a day.
+In contrast, \ref{peak_results} shows the same tables with MASEs calculated
+    with time steps within peak times only (i.e., lunch from 12 pm to 2 pm and
+    dinner from 6 pm to 8 pm).
+The differences lie mainly in the decimals of the individual MASE
+    averages while the ranks of the forecasting methods do not change except
+    in rare cases.
+That shows that the presented accuracies are driven by the forecasting methods'
+    accuracies at peak times.
+Intuitively, they all correctly predict zero demand for non-peak times.
+
+Unsurprisingly, the best model for pixels without demand (i.e.,
+    $0 < \text{ADD} < 2.5$) is \textit{trivial}.
+Whereas \textit{hsma} also adapts well, its performance is worse.
+None of the more sophisticated models reaches a similar accuracy.
+The intuition behind is that \textit{trivial} is the least distorted by the
+    relatively large proportion of noise given the low-count nature of the
+    time series.
+
+For low demand (i.e., $2.5 < \text{ADD} < 10$), there is also a clear
+    best-performing model, namely \textit{hsma}.
+As the non-seasonal \textit{hses} reaches a similar accuracy as its
+    potentially seasonal generalization, the \textit{hets}, we conclude that
+    the seasonal pattern from weekdays is not yet strong enough to be
+    recognized in low demand pixels.
+So, in the absence of seasonality, models that only model a trend part are
+    the least susceptible to the noise.
 
 For medium demand (i.e., $10 < \text{ADD} < 25$) and training horizons up to
     six weeks, the best-performing models are the same as for low demand.
