@@ -1,0 +1,22 @@
+\subsubsection{Vertical and Real-time Forecasts with Retraining}
+\label{rt}
+
+The lower-left in Figure \ref{f:inputs} shows how models trained on vertical
+    time series are extended with real-time order data as it becomes available
+    during a test day:
+Instead of obtaining an $H$-step-ahead forecast, we retrain a model after
+    every time step and only predict one step.
+The remainder is as in the previous sub-section, and the models are:
+\begin{enumerate}
+\item \textit{\gls{rtholt}},
+      \textit{\gls{rtses}}, and
+      \textit{\gls{rttheta}}:
+          Exponential smoothing without calibration and seasonal fit
+\item \textit{\gls{rtets}}:
+          ETS calibrated as described by \cite{hyndman2008b}
+\item \textit{\gls{rtarima}}:
+          ARIMA calibrated as described by \cite{hyndman2008a}
+\end{enumerate}
+Retraining \textit{fnaive} and \textit{pnaive} did not increase accuracy, and
+    thus we left them out.
+A downside of this family is the significant increase in computing costs.

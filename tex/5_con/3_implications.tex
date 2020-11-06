@@ -1,0 +1,61 @@
+\subsection{Managerial Implications}
+\label{implications}
+
+Even though zeitgeist claims that having more data is always better, our study
+    shows this is not the case here:
+First, under certain circumstances, accuracy may go up with shorter training
+    horizons.
+Second, none of the external data sources improves the accuracies.
+Somewhat surprisingly, despite ML-based methods` popularity in both business
+    and academia in recent years, we must conclude that classical forecasting
+    methods suffice to reach the best accuracy in our study.
+There is one case where ML-based methods are competitive in our case study:
+    In a high demand pixel (defined as more than 25 orders per day on average),
+    if only about four to six weeks of past data is available,
+    the \textit{vrfr} model outperformed the classical ones.
+So, we recommend trying out ML-based methods in such scenarios.
+In addition, with the \textit{hsma} and \textit{hets} models being the overall
+    winners, incorporating real-time data is not beneficial, in particular,
+    with more than six weeks of training material available.
+Lastly, with just \textit{hets}, that exhibits an accuracy comparable to
+    \textit{hsma} for low and medium demand, our industry partner can likely
+    schedule its shifts on an hourly basis one week in advance.
+
+This study gives rise to the following managerial implications.
+First, UDPs can implement readily available forecasting algorithms with limited
+    effort.
+This, however, requires purposeful data collection and preparation by those
+    companies, which, according to our study, is at least equally important as
+    the selection of the forecasting algorithm, as becomes clear from 
+    investigating the impact of the length of the training horizon.
+Second, the benefits of moving from manual forecasting to automated forecasting
+    include being able to pursue a predictive routing strategy and
+    demand-adjusted shift scheduling.
+At the time the case study data was collected, our industry partner did not
+    conduct any forecasting; the only forecasting-related activities were the
+    shift managers scheduling the shifts one week in advance manually in 
+    spreadsheets.
+Thus, selecting the right forecasting algorithm according to the framework
+    proposed in this study becomes a prerequisite to the much needed
+    operational improvements UDPs need to achieve in their quest for
+    profitability.
+In general, many UDPs launched in recent years are venture capital backed
+    start-up companies that almost by definition do not have a strong
+    grounding in operational excellence, and publications such as the ones by
+    Uber are the exception rather than the rule.
+Our paper shows that forecasting the next couple of hours can already be
+    implemented within the first year of a UDP's operations.
+Even if such forecasts could not be exploited by predictive routing (e.g., due
+    to prolonged waiting times at restaurants), they would help monitoring the
+    operations for exceptional events.
+Additionally, the shift planning may be automated saving as much as one shift
+    manager per city.
+We emphasize that for the most part, our proposed forecasting system
+    is calibrated automatically and no manual work by a data scientist is required.
+The only two parameters where assumptions need to be made are the pixel size
+    and the time step.
+The results in our empirical study suggest
+    that a pixel size of $1~\text{km}^2$ and a time step of one hour are ideal,
+    which results in the optimal trade-off
+    between signal strength and spatial-temporal resolution.
+Future research may explore adaptive grid-sizing depending on, for instance, demand density.

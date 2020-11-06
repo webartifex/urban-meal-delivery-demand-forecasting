@@ -1,0 +1,24 @@
+% Use the document width more effectively.
+\usepackage[margin=2.5cm]{geometry}
+
+\usepackage[acronym]{glossaries}
+\makeglossaries
+
+% Enable captions for figures and tables.
+\usepackage{caption}
+
+% Enable diagonal lines in tables.
+\usepackage{static/slashbox}
+
+% Enable multiple lines in a table row
+\usepackage{multirow}
+
+% Make opening quotes look different than closing quotes.
+\usepackage[english=american]{csquotes}
+\MakeOuterQuote{"}
+
+% Define helper commands.
+\usepackage{bm}
+\newcommand{\mat}[1]{\bm{#1}}
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+\newcommand{\thead}[1]{\textbf{#1}}

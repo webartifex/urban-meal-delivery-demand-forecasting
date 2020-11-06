@@ -1,0 +1,54 @@
+\subsubsection{Vertical and Real-time Forecasts without Retraining}
+\label{ml_models}
+
+The lower-right in Figure \ref{f:inputs} shows how ML models take
+    real-time order data into account without retraining.
+Based on the seasonally-adjusted time series $a_t$, we employ the feature
+    matrix and label vector representations from Sub-section \ref{learning}
+    and set $n$ to the number of daily time steps, $H$, to cover all potential
+    auto-correlations.
+The ML models are trained once before a test day starts.
+For training, the matrix and vector are populated such that $y_T$ is set to
+    the last time step of the day before the forecasts, $a_T$.
+As the splitting during CV is done with whole days, the \gls{ml} models are
+    trained with training sets consisting of samples from all times of a day
+    in an equal manner.
+Thus, the ML models learn to predict each time of the day.
+For prediction on a test day, the $H$ observations preceding the time
+    step to be forecast are used as the input vector after seasonal
+    adjustment.
+As a result, real-time data are included.
+The models in this family are:
+\begin{enumerate}
+\item \textit{\gls{vrfr}}: RF trained on the matrix as described
+\item \textit{\gls{vsvr}}: SVR trained on the matrix as described
+\end{enumerate}
+We tried other ML models such as gradient boosting machines but found
+    only RFs and SVRs to perform well in our study.
+In the case of gradient boosting machines, this is to be expected as they are
+    known not to perform well in the presence of high noise - as is natural
+    with low count data - as shown, for example, by \cite{ma2018} or
+    \cite{mason2000}.
+Also, deep learning methods are not applicable as the feature matrices only
+    consist of several hundred to thousands of rows (cf., Sub-section
+    \ref{params}).
+In \ref{tabular_ml_models}, we provide an alternative feature matrix
+    representation that exploits the two-dimensional structure of time tables
+    without decomposing the time series.
+In \ref{enhanced_feats}, we show how feature matrices are extended
+    to include predictors other than historical order data.
+However, to answer \textbf{Q5} already here, none of the external data sources
+    improves the results in our study.
+Due to the high number of time series in our study, to investigate why
+    no external sources improve the forecasts, we must us some automated
+    approach to analyzing individual time series.
+\cite{barbour2014} provide a spectral density estimation approach, called
+    the Shannon entropy, that measures the signal-to-noise ratio in a
+    database with a number normalized between 0 and 1 where lower values
+    indicate a higher signal-to-noise ratio.
+We then looked at averages of the estimates on a daily level per pixel and
+    find that including any of the external data sources from
+    \ref{enhanced_feats} always leads to significantly lower signal-to-noise
+    ratios.
+Thus, we conclude that at least for the demand faced by our industry partner
+    the historical data contains all of the signal.

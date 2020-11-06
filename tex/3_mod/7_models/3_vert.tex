@@ -1,0 +1,39 @@
+\subsubsection{Vertical and Whole-day-ahead Forecasts without Retraining}
+\label{vert}
+
+The upper-right in Figure \ref{f:inputs} shows an alternative way to
+    generate forecasts for a test day before it has started:
+First, a seasonally-adjusted time series $a_t$ is obtained from a vertical
+    time series by STL decomposition.
+Then, the actual forecasting model, trained on $a_t$, makes an $H$-step-ahead
+    prediction.
+Lastly, we add the $H$ seasonal na\"{i}ve forecasts for the seasonal component
+    $s_t$ to them to obtain the actual predictions for the test day.
+Thus, only one training is required per model type, and no real-time data is
+    used.
+By decomposing the raw time series, all long-term patterns are assumed to be
+    in the seasonal component $s_t$, and $a_t$ only contains the level with
+    a potential trend and auto-correlations.
+The models in this family are:
+\begin{enumerate}
+\item \textit{\gls{fnaive}},
+      \textit{\gls{pnaive}}:
+          Sum of STL's trend and seasonal components' na\"{i}ve forecasts
+\item \textit{\gls{vholt}},
+      \textit{\gls{vses}}, and
+      \textit{\gls{vtheta}}:
+          Exponential smoothing without calibration and seasonal
+                       fit
+\item \textit{\gls{vets}}:
+          ETS calibrated as described by \cite{hyndman2008b}
+\item \textit{\gls{varima}}:
+          ARIMA calibrated as described by \cite{hyndman2008a}
+\end{enumerate}
+As mentioned in Sub-section \ref{unified_cv}, we include the sum of the
+    (seasonal) na\"{i}ve forecasts of the STL's trend and seasonal components
+    as forecasts on their own:
+For \textit{fnaive}, we tune the "flexible" $ns$ parameter, and for
+    \textit{pnaive}, we set it to a "periodic" value.
+Thus, we implicitly assume that there is no signal in the remainder $r_t$, and
+    predict $0$ for it.
+\textit{fnaive} and \textit{pnaive} are two more simple benchmarks.

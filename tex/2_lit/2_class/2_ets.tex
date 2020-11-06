@@ -1,0 +1,78 @@
+\subsubsection{Na\"{i}ve Methods, Moving Averages, and Exponential Smoothing}
+\label{ets}
+
+Simple forecasting methods are often employed as a benchmark for more
+    sophisticated ones.
+The so-called na\"{i}ve and seasonal na\"{i}ve methods forecast the next time
+    step in a time series, $y_{T+1}$, with the last observation, $y_T$,
+    and, if a seasonal pattern is present, with the observation $k$ steps
+    before, $y_{T+1-k}$.
+As variants, both methods can be generalized to include drift terms in the
+    presence of a trend or changing seasonal amplitude.
+
+If a time series exhibits no trend, a simple moving average (SMA) is a
+    generalization of the na\"{i}ve method that is more robust to outliers.
+It is defined as follows: $\hat{y}_{T+1} = \frac{1}{h} \sum_{i=T-h}^{T} y_i$
+    where $h$ is the horizon over which the average is calculated.
+If a time series exhibits a seasonal pattern, setting $h$ to a multiple of the
+    periodicity $k$ suffices that the forecast is unbiased.
+
+Starting in the 1950s, another popular family of forecasting methods,
+    so-called exponential smoothing methods, was introduced by
+    \cite{brown1959}, \cite{holt1957}, and \cite{winters1960}.
+The idea is that forecasts $\hat{y}_{T+1}$ are a weighted average of past
+    observations where the weights decay over time; in the case of the simple
+    exponential smoothing (SES) method we obtain:
+$
+\hat{y}_{T+1} = \alpha y_T + \alpha (1 - \alpha) y_{T-1}
+                + \alpha (1 - \alpha)^2 y_{T-2}
+                + \dots + \alpha (1 - \alpha)^{T-1} y_{1}
+$
+where $\alpha$ (with $0 \le \alpha \le 1$) is a smoothing parameter.
+
+Exponential smoothing methods are often expressed in an alternative component
+    form that consists of a forecast equation and one or more smoothing
+    equations for unobservable components.
+Below, we present a generalization of SES, the so-called Holt-Winters'
+    seasonal method, in an additive formulation.
+$\ell_t$, $b_t$, and $s_t$ represent the unobservable level, trend, and
+    seasonal components inherent in $y_t$, and $\beta$ and $\gamma$ complement
+    $\alpha$ as smoothing parameters:
+\begin{align*}
+\hat{y}_{t+1} & = \ell_t + b_t + s_{t+1-k} \\
+\ell_t        & = \alpha(y_t - s_{t-k}) + (1 - \alpha)(\ell_{t-1} + b_{t-1}) \\
+b_t           & = \beta (\ell_{t} - \ell_{t-1}) + (1 - \beta) b_{t-1} \\
+s_t           & = \gamma (y_t - \ell_{t-1} - b_{t-1}) + (1-\gamma)s_{t-k}
+\end{align*}
+With $b_t$, $s_t$, $\beta$, and $\gamma$ removed, this formulation reduces to
+    SES.
+Distinct variations exist: Besides the three components, \cite{gardner1985}
+    add dampening for the trend, \cite{pegels1969} provides multiplicative
+    formulations, and \cite{taylor2003} adds dampening to the latter.
+The accuracy measure commonly employed is the sum of squared errors between
+    the observations and their forecasts.
+
+Originally introduced by \cite{assimakopoulos2000}, \cite{hyndman2003} show
+    how the Theta method can be regarded as an equivalent to SES with a drift
+    term.
+We mention this method here only because \cite{bell2018} emphasize that it
+    performs well at Uber.
+However, in our empirical study, we find that this is not true in general.
+
+\cite{hyndman2002} introduce statistical processes, so-called innovations	
+    state-space models, to generalize the methods in this sub-section.
+They call this family of models ETS as they capture error, trend, and seasonal
+    terms.
+Linear and additive ETS models have a structure like so:
+\begin{align*}
+y_t       & = \vec{w} \cdot \vec{x}_{t-1} + \epsilon_t \\
+\vec{x_t} & = \mat{F} \vec{x}_{t-1} + \vec{g} \epsilon_t
+\end{align*}
+$y_t$ denote the observations as before while $\vec{x}_t$ is a state vector of
+    unobserved components.
+$\epsilon_t$ is a white noise series and the matrix $\mat{F}$ and the vectors
+    $\vec{g}$ and $\vec{w}$ contain a model's coefficients.
+Just as the models in the next sub-section, ETS models are commonly fitted
+    with maximum likelihood and evaluated using information theoretical
+    criteria against historical data.
+We refer to \cite{hyndman2008b} for a thorough summary.

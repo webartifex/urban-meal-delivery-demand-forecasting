@@ -1,0 +1,38 @@
+\subsubsection{Cross-Validation}
+\label{cv}
+
+Because ML models are trained by minimizing a loss function $L$, the
+    resulting value of $L$ underestimates the true error we see when
+    predicting into the actual future by design.
+To counter that, one popular and model-agnostic approach is cross-validation
+    (\gls{cv}), as summarized, for example, by \cite{hastie2013}.
+CV is a resampling technique, which ranomdly splits the samples into a
+    training and a test set.
+Trained on the former, an ML model makes forecasts on the latter.
+Then, the value of $L$ calculated only on the test set gives a realistic and
+    unbiased estimate of the true forecasting error, and may be used for one
+    of two distinct aspects:
+First, it assesses the quality of a fit and provides an idea as to how the
+    model would perform in production when predicting into the actual future.
+Second, the errors of models of either different methods or the same method
+    with different parameters may be compared with each other to select the
+    best model.
+In order to first select the best model and then assess its quality, one must
+    apply two chained CVs:
+The samples are divided into training, validation, and test sets, and all
+    models are trained on the training set and compared on the validation set.
+Then, the winner is retrained on the union of the training and validation
+    sets and assessed on the test set.
+
+Regarding the splitting, there are various approaches, and we choose the
+    so-called $k$-fold CV, where the samples are randomly divided into $k$
+    folds of the same size.
+Each fold is used as a test set once and the remaining $k-1$ folds become
+    the corresponding training set.
+The resulting $k$ error measures are averaged.
+A $k$-fold CV with $k=5$ or $k=10$ is a compromise between the two extreme
+    cases of having only one split and the so-called leave-one-out CV
+    where $k = m$: Computation is still relatively fast and each sample is
+    part of several training sets maximizing the learning from the data.
+We adapt the $k$-fold CV to the ordinal stucture in $\mat{X}$ and $\vec{y}$ in
+    Sub-section \ref{unified_cv}.

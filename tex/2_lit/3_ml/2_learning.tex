@@ -1,0 +1,53 @@
+\subsubsection{Supervised Learning}
+\label{learning}
+
+A conceptual difference between classical and ML methods is the format
+    for the model inputs.
+In ML models, a time series $Y$ is interpreted as labeled data.
+Labels are collected into a vector $\vec{y}$ while the corresponding
+    predictors are aligned in an $(T - n) \times n$ matrix $\mat{X}$:
+$$
+\vec{y}
+=
+\begin{pmatrix}
+    y_T \\
+    y_{T-1} \\
+    \dots \\
+    y_{n+1}
+\end{pmatrix}
+~~~~~~~~~~
+\mat{X}
+=
+\begin{bmatrix}
+    y_{T-1} & y_{T-2} & \dots & y_{T-n} \\
+    y_{T-2} & y_{T-3} & \dots & y_{T-(n+1)} \\
+    \dots   & \dots   & \dots & \dots \\
+    y_n     & y_{n-1} & \dots & y_1
+\end{bmatrix}
+$$
+The $m = T - n$ rows are referred to as samples and the $n$ columns as
+    features.
+Each row in $\mat{X}$ is "labeled" by the corresponding entry in $\vec{y}$,
+    and ML models are trained to fit the rows to their labels.
+Conceptually, we model a functional relationship $f$ between $\mat{X}$ and
+    $\vec{y}$ such that the difference between the predicted
+    $\vec{\hat{y}} = f(\mat{X})$ and the true $\vec{y}$ are minimized
+    according to some error measure $L(\vec{\hat{y}}, \vec{y})$, where $L$
+    summarizes the goodness of the fit into a scalar value (e.g., the
+    well-known mean squared error [MSE]; cf., Section \ref{mase}).
+$\mat{X}$ and $\vec{y}$ show the ordinal character of time series data:
+    Not only overlap the entries of $\mat{X}$ and $\vec{y}$, but the rows of
+    $\mat{X}$ are shifted versions of each other.
+That does not hold for ML applications in general (e.g., the classical
+    example of predicting spam vs. no spam emails, where the features model
+    properties of individual emails), and most of the common error measures
+    presented in introductory texts on ML, are only applicable in cases
+    without such a structure in $\mat{X}$ and $\vec{y}$.
+$n$, the number of past time steps required to predict a $y_t$, is an
+    exogenous model parameter.
+For prediction, the forecaster supplies the trained ML model an input
+    vector in the same format as a row $\vec{x}_i$ in $\mat{X}$.
+For example, to predict $y_{T+1}$, the model takes the vector
+    $(y_T, y_{T-1}, ..., y_{T-n+1})$ as input.
+That is in contrast to the classical methods, where we only supply the number
+    of time steps to be predicted as a scalar integer.

@@ -1,0 +1,31 @@
+\subsection{Impact of the Training Horizon}
+\label{training}
+
+Whereas it is reasonable to assume that forecasts become more accurate as the
+    training horizon expands, our study reveals some interesting findings.
+First, without demand, \textit{trivial} indeed performs better with more
+    training material, but improved pattern recognition cannot be the cause
+    here.
+Instead, we argue that the reason for this is that the longer there has been
+    no steady demand, the higher the chance that this will not change soon.
+Further, if we focus on shorter training horizons, the sample will necessarily
+    contain cases where a pixel is initiated after a popular-to-be restaurant
+    joined the platform:
+Demand grows fast making \textit{trivial} less accurate, and the pixel moves
+    to another cluster soon.
+
+Second, with low demand, the best-performing \textit{hsma} becomes less
+    accurate with more training material.
+While one could argue that this is due to \textit{hsma} not fitting a trend,
+    the less accurate \textit{hses} and \textit{hets} do fit a trend.
+Instead, we argue that any low-demand time series naturally exhibits a high
+    noise-to-signal ratio, and \textit{hsma} is the least susceptible to
+    noise.
+Then, to counter the missing trend term, the training horizon must be shorter.
+
+With medium demand, a similar argument can be made; however, the
+    signal already becomes more apparent favoring \textit{hets} with more
+    training data.
+
+Lastly, with high demand, the signal becomes so clear that more sophisticated
+    models can exploit longer training horizons.
