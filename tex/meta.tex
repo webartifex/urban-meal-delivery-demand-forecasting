@@ -3,7 +3,7 @@
 \journal{Transportation Research Part E}
 \title{Real-time Demand Forecasting for an Urban Delivery Platform}
 
-\author[WHU]{Alexander Hess\fnref{emails}}
+\author[WHU]{Alexander Hess\fnref{emails}\fnref{corresponding}}
 \author[WHU]{Stefan Spinler\fnref{emails}}
 \author[MIT]{Matthias Winkenbach\fnref{emails}}
 \address[WHU]{
@@ -21,20 +21,26 @@ Emails:
     mwinkenb@mit.edu
 }
 
+\fntext[corresponding]{
+The corresponding author is Alexander Hess.
+Use the provided email.
+}
+
 \begin{abstract}
 Meal delivery platforms like Uber Eats shape the landscape in cities around the world.
-This paper addresses forecasting demand into the short-term future.
+This paper addresses forecasting demand on a grid into the short-term future,
+    enabling, for example, predictive routing applications.
 We propose an approach incorporating
-    both classical forecasting
-    and machine learning methods.
-Model evaluation and selection is adapted to demand typical for such a platform
-    (i.e., intermittent with a double-seasonal pattern).
-The results of an empirical study with a European meal delivery service show
-    that machine learning models become competitive
-    once the average daily demand passes a threshold.
-As a main contribution, the paper explains
-    how a forecasting system must be set up
-    to enable predictive routing.
+    both classical forecasting and machine learning methods
+    and adapt model evaluation and selection to typical demand:
+        intermittent with a double-seasonal pattern.
+An empirical study shows that
+    an exponential smoothing based method trained on past demand data alone
+        achieves optimal accuracy,
+    if at least two months are on record.
+With a more limited demand history,
+    machine learning is shown
+    to yield more accurate prediction results than classical methods.
 \end{abstract}
 
 \begin{keyword}
