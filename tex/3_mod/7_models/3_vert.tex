@@ -16,17 +16,17 @@ By decomposing the raw time series, all long-term patterns are assumed to be
     a potential trend and auto-correlations.
 The models in this family are:
 \begin{enumerate}
-\item \textit{\gls{fnaive}},
-      \textit{\gls{pnaive}}:
+\item \textit{fnaive},
+      \textit{pnaive}:
           Sum of STL's trend and seasonal components' na\"{i}ve forecasts
-\item \textit{\gls{vholt}},
-      \textit{\gls{vses}}, and
-      \textit{\gls{vtheta}}:
+\item \textit{vholt},
+      \textit{vses}, and
+      \textit{vtheta}:
           Exponential smoothing without calibration and seasonal
                        fit
-\item \textit{\gls{vets}}:
+\item \textit{vets}:
           ETS calibrated as described by \cite{hyndman2008b}
-\item \textit{\gls{varima}}:
+\item \textit{varima}:
           ARIMA calibrated as described by \cite{hyndman2008a}
 \end{enumerate}
 As mentioned in Sub-section \ref{unified_cv}, we include the sum of the

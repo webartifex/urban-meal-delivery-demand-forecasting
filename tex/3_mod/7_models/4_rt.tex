@@ -8,13 +8,13 @@ Instead of obtaining an $H$-step-ahead forecast, we retrain a model after
     every time step and only predict one step.
 The remainder is as in the previous sub-section, and the models are:
 \begin{enumerate}
-\item \textit{\gls{rtholt}},
-      \textit{\gls{rtses}}, and
-      \textit{\gls{rttheta}}:
+\item \textit{rtholt},
+      \textit{rtses}, and
+      \textit{rttheta}:
           Exponential smoothing without calibration and seasonal fit
-\item \textit{\gls{rtets}}:
+\item \textit{rtets}:
           ETS calibrated as described by \cite{hyndman2008b}
-\item \textit{\gls{rtarima}}:
+\item \textit{rtarima}:
           ARIMA calibrated as described by \cite{hyndman2008a}
 \end{enumerate}
 Retraining \textit{fnaive} and \textit{pnaive} did not increase accuracy, and
