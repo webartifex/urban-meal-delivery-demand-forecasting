@@ -6,5 +6,5 @@ to generate the academic paper
 based on the
     [urban-meal-delivery](https://github.com/webartifex/urban-meal-delivery)
     research project.
-The paper is accepted for publication by the journal
+The paper is [published](https://authors.elsevier.com/a/1cCON4sj-4lyZW) in the journal
     [Transportation Research Part E: Logistics and Transportation Review](https://www.journals.elsevier.com/transportation-research-part-e-logistics-and-transportation-review).

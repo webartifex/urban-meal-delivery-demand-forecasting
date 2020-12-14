@@ -15,21 +15,21 @@ As the models in this family do not include the test day's demand data in
 The models in this family are as follows; we use prefixes, such as "h" here,
     when methods are applied in other families as well:
 \begin{enumerate}
-\item \textit{\gls{naive}}:
+\item \textit{naive}:
           Observation from the same time step one week prior
-\item \textit{\gls{trivial}}:
+\item \textit{trivial}:
           Predict $0$ for all time steps
-\item \textit{\gls{hcroston}}:
+\item \textit{hcroston}:
           Intermittent demand method introduced by \cite{croston1972}
-\item \textit{\gls{hholt}},
-      \textit{\gls{hhwinters}},
-      \textit{\gls{hses}},
-      \textit{\gls{hsma}}, and
-      \textit{\gls{htheta}}:
+\item \textit{hholt},
+      \textit{hhwinters},
+      \textit{hses},
+      \textit{hsma}, and
+      \textit{htheta}:
           Exponential smoothing without calibration
-\item \textit{\gls{hets}}:
+\item \textit{hets}:
           ETS calibrated as described by \cite{hyndman2008b}
-\item \textit{\gls{harima}}:
+\item \textit{harima}:
           ARIMA calibrated as described by \cite{hyndman2008a}
 \end{enumerate}
 \textit{naive} and \textit{trivial} provide an absolute benchmark for the

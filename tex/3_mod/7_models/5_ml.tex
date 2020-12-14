@@ -10,7 +10,7 @@ Based on the seasonally-adjusted time series $a_t$, we employ the feature
 The ML models are trained once before a test day starts.
 For training, the matrix and vector are populated such that $y_T$ is set to
     the last time step of the day before the forecasts, $a_T$.
-As the splitting during CV is done with whole days, the \gls{ml} models are
+As the splitting during CV is done with whole days, the ML models are
     trained with training sets consisting of samples from all times of a day
     in an equal manner.
 Thus, the ML models learn to predict each time of the day.
@@ -20,8 +20,8 @@ For prediction on a test day, the $H$ observations preceding the time
 As a result, real-time data are included.
 The models in this family are:
 \begin{enumerate}
-\item \textit{\gls{vrfr}}: RF trained on the matrix as described
-\item \textit{\gls{vsvr}}: SVR trained on the matrix as described
+\item \textit{vrfr}: RF trained on the matrix as described
+\item \textit{vsvr}: SVR trained on the matrix as described
 \end{enumerate}
 We tried other ML models such as gradient boosting machines but found
     only RFs and SVRs to perform well in our study.
